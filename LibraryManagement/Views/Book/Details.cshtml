@@ -1,0 +1,103 @@
+﻿@model LibraryManagement.Models.Book
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section scripts {
+
+    @if (!(Model == null))
+    {
+    
+        <script type="text/javascript">
+            $('#requestBook').click(function () {
+                var token = $('input[name=__RequestVerificationToken]').val();
+            var bookid = {
+                __RequestVerificationToken: token,
+                bookId: @Model.BookId};
+        $.ajax({
+        url: "/Request/Create",
+        type: "POST",
+        dataType: "json",
+            // contentType: 'application/json; charset=utf-8',
+        data: bookid, 
+            success: function (response) {
+                var responseMessage = "Your book request is successful. Your request token:" + response 
+                + " . Please go to library book checkout counter and mention your token number to checkout book."
+                alert(responseMessage);
+                window.location.href = '/Book/Index'
+            },
+        failure: function(response) { alert('failed');},
+        error: function (response) { alert('error'); }
+        });
+        return false;
+        });
+        </script>
+    }
+}
+
+@if (ViewBag.LoggedIn != null && Convert.ToBoolean(ViewBag.LoggedIn) == false)
+{
+    <p>@ViewBag.Message</p>
+}
+else
+{
+<h1>Details</h1>
+<div>
+    <h4>Book</h4>
+    <hr />
+   
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Tittle)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Tittle)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.BookType)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.BookType)
+        </dd>
+        <dt class="col-sm-2">
+            Author
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Auth.FullName)
+        </dd>
+        <dt class="col-sm-2">
+            Publisher
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Pub.PuilisherName)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.BookDescription)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.BookDescription)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.BookStatus)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.BookStatus)
+        </dd>
+    </dl>
+</div>
+<div>
+    @if (Model.BookStatus.Equals("Available"))
+    {
+        <from id="tokenFrom" name="tokenFrom" action="/" method="post">
+            @Html.AntiForgeryToken()
+        </from>
+        <input type="submit" value="Request Checkout" name="requestBook" id="requestBook" />
+        <br>
+
+    }
+
+
+    <a asp-action="Index">Back to List</a>
+</div>
+}

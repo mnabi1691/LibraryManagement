@@ -1,0 +1,117 @@
+﻿@model LibraryManagement.Models.LibraryUserRegistrationRequest
+
+@{
+    ViewData["Title"] = "RegisterAccount";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Register Account</h1>
+
+
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+
+        @if (ViewBag != null && Convert.ToBoolean(ViewBag.Status) == true)
+        {
+           <div>@ViewBag.Message</div>
+        }
+        else
+        {
+            <form id="AccountRegisterFrom" asp-action="RegisterAccount" onsubmit="return validationFunction()">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="FirstName" class="control-label"></label>
+                    <input asp-for="FirstName" class="form-control" />
+                    <span asp-validation-for="FirstName" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="LastName" class="control-label"></label>
+                    <input asp-for="LastName" class="form-control" />
+                    <span asp-validation-for="LastName" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Nidno" class="control-label"></label>
+                    <input asp-for="Nidno" class="form-control" id="niodno" />
+                    <span asp-validation-for="Nidno" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="PassportNo" class="control-label"></label>
+                    <input asp-for="PassportNo" class="form-control" id="PassportNo" />
+                    <span id="PassportValidation" asp-validation-for="PassportNo" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Email" class="control-label"></label>
+                    <input asp-for="Email" class="form-control" />
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="MobileNo" class="control-label"></label>
+                    <input asp-for="MobileNo" class="form-control" />
+                    <span asp-validation-for="MobileNo" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="HomeAddress" class="control-label"></label>
+                    <input asp-for="HomeAddress" class="form-control" />
+                    <span asp-validation-for="HomeAddress" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="City" class="control-label"></label>
+                    <input asp-for="City" class="form-control" />
+                    <span asp-validation-for="City" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Country" class="control-label"></label>
+                    <input asp-for="Country" class="form-control" />
+                    <span asp-validation-for="Country" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="DateOfBirth" class="control-label"></label>
+                    <input asp-for="DateOfBirth" class="form-control" />
+                    <span asp-validation-for="DateOfBirth" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Uname" class="control-label"></label>
+                    <input asp-for="Uname" class="form-control" />
+                    <span asp-validation-for="Uname" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Upassword" class="control-label"></label>
+                    <input type="password" asp-for="Upassword" class="form-control" />
+                    <span asp-validation-for="Upassword" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="ConfirmPassword" class="control-label"></label>
+                    <input type="password" asp-for="ConfirmPassword" class="form-control" />
+                    <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Create" class="btn btn-primary" id="RegisterAccountButton" />
+                </div>
+            </form>
+        }
+    </div>
+</div>
+
+
+@section Scripts {
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+    <script type="text/javascript">
+        function validationFunction(e) {
+            var Nidno = $('#niodno');
+            var PassportNo = $('#PassportNo');
+            if (Nidno.val() == null || Nidno.val() == '') {
+
+                if (PassportNo.val() == null || PassportNo.val() == '') {
+                    alert("You must provide either valid Nid number or Passport number for Registration");
+                    return false;
+                }
+            }
+
+            return true;
+        }
+    </script>
+}
+

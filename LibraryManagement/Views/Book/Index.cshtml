@@ -1,0 +1,56 @@
+﻿@model IEnumerable<LibraryManagement.Models.Book>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Books</h1>
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Tittle)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.BookType)
+            </th>
+            <th>
+                Author
+            </th>
+            <th>
+                Publisher
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.BookStatus)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Tittle)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.BookType)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Auth.FullName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Pub.PuilisherName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.BookStatus)
+            </td>
+            <td>
+                <a asp-action="Details" asp-route-id="@item.BookId">Details</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

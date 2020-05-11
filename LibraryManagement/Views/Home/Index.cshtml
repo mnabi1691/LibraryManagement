@@ -1,0 +1,15 @@
+﻿@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor HttpContextAccessor
+@{
+    ViewData["Title"] = "Home Page";
+
+    if (!string.IsNullOrEmpty(HttpContextAccessor.HttpContext.Session.GetString("FullName")))
+    {
+        ViewBag.FullName = HttpContextAccessor.HttpContext.Session.GetString("FullName");
+    }
+}
+
+<div class="text-center">
+    <h1 class="display-4">Welcome  @if (!string.IsNullOrEmpty(ViewBag.FullName)) { @ViewBag.FullName } </h1>
+    <p>WellDev Library Management System</p>
+</div>
